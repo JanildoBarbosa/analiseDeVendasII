@@ -12,6 +12,11 @@ public class Sale {
 	public Sale() {
 	}
 
+	public Sale(String seller, Double total) {
+		this.seller = seller;
+		this.total = total;
+	}
+
 	public Sale(Integer month, Integer year, String seller, Integer itens, Double total) {
 		this.month = month;
 		this.year = year;
@@ -63,4 +68,11 @@ public class Sale {
 	public Double averagePrice() {
 		return total / itens;
 	}
+
+	@Override
+	public String toString() {
+		return seller + ", " + total;
+	}
+	
+	
 }
