@@ -8,9 +8,6 @@ public class Sale {
 	private Integer itens;
 	private Double total;
 	
-	
-	public Sale() {
-	}
 
 	public Sale(String seller, Double total) {
 		this.seller = seller;
@@ -71,7 +68,7 @@ public class Sale {
 
 	@Override
 	public String toString() {
-		return seller + ", " + total;
+		return seller + ", " + String.format("%.2f", total);
 	}
 	
 	

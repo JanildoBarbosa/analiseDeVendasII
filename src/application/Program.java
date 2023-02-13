@@ -3,11 +3,12 @@ package application;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import model.entities.Sale;
 
@@ -17,7 +18,7 @@ public class Program {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
-		String path = "c:\\temp\\in.csv";
+		String path = sc.next();
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))){
 			
@@ -39,22 +40,20 @@ public class Program {
 				
 				line = br.readLine();
 				
-			}
+			}			
 			
-			Map<String, Double> totalSales = list.entrySet().stream()
-			    .forEach(entry -> {
-			        String seller = entry.getKey();
-			        Double value = entry.getValue();
-			        totalSales.merge(seller, value, Double::sum);
-			    });
+			Map<String, Double> totalSales = new TreeMap<>(
+						list.stream().collect(
+						Collectors.groupingBy(Sale::getSeller, Collectors.summingDouble(Sale::getTotal))));
 
-			totalSales.forEach((seller, total) -> 
-			    System.out.println(seller + ": " + total));
+			totalSales.entrySet().forEach(p -> System.out.println(p.getKey() + ", " + p.getValue()));
 
+			
 		} catch (Exception e) {
 			System.out.println("Error : " + e.getMessage());
 		}
 
+		
 	}
 
 }
